@@ -19,18 +19,18 @@ var connection = mysql.createConnection({
 // When Connected print connection id then display inventory
 connection.connect(function (err) {
     if (err) throw err;
-    console.log("connected as id " + connection.threadId + "\n");
+    console.log("\nconnected as id " + connection.threadId + "\n");
 
-    displayInventory();
+    console.log("Loding All The Available Products..........\n");
 
+    setTimeout(displayInventory, 2000);
 
-    setTimeout(promptUser, 2000);
 
 });
 
 function displayInventory() {
 
-    console.log("Here Are All The Products Available ...\n");
+    
 
     connection.query("SELECT item_id, product_name, price FROM products", function (err, res) {
         if (err) throw err;
@@ -38,17 +38,19 @@ function displayInventory() {
 
         console.log('------------------------------------------------------------------------------------\n');
 
-        var strOut = '';
+        var logVar = '';
         for (var i = 0; i < res.length; i++) {
-            strOut = '';
-            strOut += 'Item ID: ' + res[i].item_id + '  || ';
-            strOut += 'Product Name: ' + res[i].product_name + '  || ';
-            strOut += 'Price: $' + res[i].price + '\n';
+            logVar = '';
+            logVar += 'Item ID: ' + res[i].item_id + '  || ';
+            logVar += 'Product Name: ' + res[i].product_name + '  || ';
+            logVar += 'Price: $' + res[i].price + '\n';
 
-            console.log(strOut);
+            console.log(logVar);
         }
 
         console.log("--------------------------------------------------------------------------------------\n");
+
+        setTimeout(promptUser, 2000);
 
     });
 }
@@ -60,7 +62,7 @@ function promptUser() {
         {
             type: "input",
             name: "itemId",
-            message: "Please Type in the Item ID of the product you would like to buy",
+            message: "Please Type in the Item ID of the product you would like to buy! ",
             validate: function (value) {
                 if (isNaN(value) === false) {
                     return true;
@@ -72,7 +74,7 @@ function promptUser() {
         {
             type: "input",
             name: "itemQuantity",
-            message: "How Many Would You like today",
+            message: "How Many Would You like today??",
             validate: function (value) {
                 if (isNaN(value) === false) {
                     return true;
@@ -88,7 +90,7 @@ function promptUser() {
         var itemQuantityEntered = answer.itemQuantity;
 
 
-        console.log(itemIdSelected + "..............." + itemQuantityEntered);
+        
 
         // Checking up if the id selected exists in the inventory
         connection.query("SELECT * FROM products WHERE ?", { item_id: itemIdSelected }, function (err, data) {
@@ -99,7 +101,7 @@ function promptUser() {
             if (data.length === 0) {
                 console.log("Error: Invalid Item ID, Please Select A valid one!");
 
-                displayInventory();
+                setTimeout(displayInventory, 2000);
 
 
                 // We do checking the quantity wanted and comparing it ....etc
@@ -110,7 +112,7 @@ function promptUser() {
             
                 // compare it to the quantity available if it's lower or equal we do the updates
                 if (itemQuantityEntered <= productSelectedData.stock_quantity) {
-                    console.log('Congratulations, the product you requested is in stock! Placing order.....');
+                    console.log('\nCongratulations, the product quantity you requested is in stock! Placing order.....');
                 //    Updating our bamazon database
                     connection.query("UPDATE products SET ? WHERE ?", [{
                         stock_quantity: productSelectedData.stock_quantity - itemQuantityEntered
@@ -121,7 +123,8 @@ function promptUser() {
                         if (err) throw err;
 
                         // logging information for the user
-                        console.log('Your order has been placed! Your total is $' + productSelectedData.price * itemQuantityEntered);
+                        console.log('Your order has been placed! Your total is $' + (productSelectedData.price * itemQuantityEntered).toFixed(2));
+                        console.log( "Order Details: " + itemQuantityEntered + " " + productSelectedData.product_name);
                         console.log('Thank you for shopping with us!');
                         console.log("\n---------------------------------------------------------------------\n");
 
@@ -134,7 +137,7 @@ function promptUser() {
                     // IF Qantity enetered is more than inventory quantity log and prompt user again
                 } else {
 
-                    console.log('Sorry, not enough quantity in our inventory.');
+                    console.log('\nSorry, not enough quantity in our inventory.');
                     console.log('Please modify your order.');
                     console.log("\n---------------------------------------------------------------------\n");
 
