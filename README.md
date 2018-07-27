@@ -4,9 +4,9 @@ This is a command line interface app which need to be run using node.js. Leaning
 ## Levels 
 
 ### Level 1 - bamazonCustomer.js 
+#### App in Action
 ![GitHub Logo](/gifs/bamazoncustomer.gif)
-Format: ![Alt Text](url)
-* Make sure you install the npm packages before running anything. 
+* Make sure you install the npm packages (mysql, inquirer) before running anything. 
 * Open bash terminal window and run (node bamazonCustomer.js). 
 * You will see all the products available in the store. 
 * You will then be asked to enter the item_id and quantity you want to purchase. 
@@ -14,6 +14,8 @@ Format: ![Alt Text](url)
 * If there is not enough quantity in the inventory of the product you selected you will be asked to modify your order and prompted again.
 
 ### Level 2- bamazonManager.js
+#### App in Action
+![GitHub Logo](/gifs/bamazonmanager.gif)
 * Open bash terminal window and run (node bamazonManager.js). 
 * You will be asked to choose what to do.
 * If you choose (View Products For Sale), you will get the results of all available products, then prompted again with the choices.
