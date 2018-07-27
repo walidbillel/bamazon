@@ -4,6 +4,8 @@ This is a command line interface app which need to be run using node.js. Leaning
 ## Levels 
 
 ### Level 1 - bamazonCustomer.js 
+![GitHub Logo](/gifs/bamazoncustomer.gif)
+Format: ![Alt Text](url)
 * Make sure you install the npm packages before running anything. 
 * Open bash terminal window and run (node bamazonCustomer.js). 
 * You will see all the products available in the store. 
